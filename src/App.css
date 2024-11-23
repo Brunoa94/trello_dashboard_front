@@ -1,4 +1,11 @@
 * {
   margin: 0;
   padding: 0;
+  scrollbar-width: none; /* Hides scrollbar */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
+}
+
+/* For WebKit-based browsers (Chrome, Edge, Safari) */
+*::-webkit-scrollbar {
+  display: none; /* Hides scrollbar */
 }
