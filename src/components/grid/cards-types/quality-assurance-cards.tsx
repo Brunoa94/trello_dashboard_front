@@ -15,7 +15,6 @@ interface Props {
 }
 
 const QualityAssuranceCard = (props: Props) => {
-  console.log("PRIORIY: " + props.card.priority);
   return (
     <Popover>
       <PopoverTrigger asChild>

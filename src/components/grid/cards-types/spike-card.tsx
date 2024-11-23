@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PriorityLabel from "./priority-label";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
+import { formatDate } from "./funtions/format-date";
 
 interface Props {
   card: TaskCard;
@@ -43,7 +44,7 @@ const SpikeCard = (props: Props) => {
             <div className="flex items-center gap-3">
               <span className="text-sm font-roboto">Created at:</span>
               <span className="text-sm font-bold font-roboto">
-                {props.card.created_date}
+                {formatDate(props.card.created_date)}
               </span>
             </div>
             <PriorityLabel priority={props.card.priority} />
