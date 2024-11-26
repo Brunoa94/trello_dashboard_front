@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,8 +23,14 @@ import {
 import { z } from "zod";
 import Service from "@/core/service";
 import { CreateCard } from "@/models/create-card";
+import { MdOutlinePriorityHigh } from "react-icons/md";
+import { RxAvatar } from "react-icons/rx";
+import { MdOutlineHistoryEdu } from "react-icons/md";
+import { MdTimeline } from "react-icons/md";
 
-interface Props {}
+interface Props {
+  setAddCard: (value: boolean) => void;
+}
 
 const AddNewCard = (props: Props) => {
   const priorities = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
@@ -41,7 +46,6 @@ const AddNewCard = (props: Props) => {
     created_date: z.string(),
   });
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +58,6 @@ const AddNewCard = (props: Props) => {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const service = new Service();
     const createCard: CreateCard = values;
@@ -62,8 +65,14 @@ const AddNewCard = (props: Props) => {
     await service.createCard(createCard);
   }
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-10">
-      <div className="w-[calc(50%)] px-8 py-8 flex flex-col items-center bg-white rounded-xl">
+    <div
+      className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.5)] flex items-center justify-center z-10"
+      onClick={() => props.setAddCard(false)}
+    >
+      <div
+        className="w-[calc(50%)] px-8 py-8 flex flex-col items-center bg-white rounded-xl"
+        onClick={(e: any) => e.stopPropagation()}
+      >
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -87,7 +96,10 @@ const AddNewCard = (props: Props) => {
               name="priority"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Priority</FormLabel>
+                  <div className="flex items-center gap-2">
+                    <MdOutlinePriorityHigh className="text-xl" />
+                    <FormLabel>Priority</FormLabel>
+                  </div>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -113,7 +125,10 @@ const AddNewCard = (props: Props) => {
               name="avatar"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Avatar</FormLabel>
+                  <div className="flex items-center gap-2">
+                    <RxAvatar className="text-2xl" />
+                    <FormLabel>User</FormLabel>
+                  </div>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -140,7 +155,10 @@ const AddNewCard = (props: Props) => {
               name="story_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Story type</FormLabel>
+                  <div className="flex items-center gap-2">
+                    <MdOutlineHistoryEdu className="text-2xl" />
+                    <FormLabel>Story type</FormLabel>
+                  </div>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -170,7 +188,10 @@ const AddNewCard = (props: Props) => {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <div className="flex items-center gap-2">
+                    <MdTimeline className="text-2xl" />
+                    <FormLabel>Status</FormLabel>
+                  </div>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
