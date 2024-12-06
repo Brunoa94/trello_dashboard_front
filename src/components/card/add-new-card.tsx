@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -57,6 +57,10 @@ const AddNewCard = (props: Props) => {
       created_date: new Date().toISOString(),
     },
   });
+
+  useEffect(() => {
+    console.log("JSON: " + JSON.stringify(form));
+  }, [form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const service = new Service();
