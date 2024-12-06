@@ -23,8 +23,8 @@ const PriorityLabel = (props: Props) => {
   } else if (props.priority === "MEDIUM") {
     return (
       <div className="flex items-center gap-1 ml-auto">
-        <span className="text-xs text-yellow-600 font-bold">Medium</span>
-        <PiWarningCircle className="text-yellow-600 text-2xl" />
+        <span className="text-xs text-yellow-500 font-bold">Medium</span>
+        <PiWarningCircle className="text-yellow-500 text-2xl" />
       </div>
     );
   } else {

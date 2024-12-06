@@ -4,16 +4,24 @@ import PriorityLabel from "./priority-label";
 import { formatDate } from "./funtions/format-date";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import PopoverItems from "./popover-items";
+import { useState } from "react";
+import { returnAvatar } from "@/components/global/avatar-icons";
 
 interface Props {
   card: TaskCard;
 }
 
 const QualityAssuranceCard = (props: Props) => {
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <div className="w-full px-4 py-2 bg-white rounded-md shadow-lg hover:shadow-xl hover:shadow-yellow-700 shadow-yellow-700 border-t-2 border-yellow-700 cursor-pointer">
+        <div
+          onClick={() => {
+            setIsDialogOpen(true);
+          }}
+          className="w-full px-4 py-2 bg-white rounded-md shadow-lg hover:shadow-xl hover:shadow-yellow-700 shadow-yellow-700 border-t-2 border-yellow-700 cursor-pointer"
+        >
           <div className="flex flex-col gap-1">
             <div
               style={{
@@ -44,10 +52,13 @@ const QualityAssuranceCard = (props: Props) => {
               </div>
               <PriorityLabel priority={props.card.priority} />
             </div>
+            <div className="flex items-center justify-end w-full gap-2">
+              {returnAvatar(props.card.avatar, true)}
+            </div>
           </div>
         </div>
       </DialogTrigger>
-      <PopoverItems taskCard={props.card} />
+      <PopoverItems taskCard={props.card} setDialogOpen={setIsDialogOpen} />
     </Dialog>
   );
 };

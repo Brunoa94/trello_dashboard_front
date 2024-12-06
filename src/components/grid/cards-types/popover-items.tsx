@@ -27,6 +27,7 @@ import { RxAvatar } from "react-icons/rx";
 
 interface Props {
   taskCard: TaskCard;
+  setDialogOpen: (value: boolean) => void;
 }
 
 const PopoverItems = (props: Props) => {
@@ -54,10 +55,12 @@ const PopoverItems = (props: Props) => {
 
   const onSave = () => {
     Service.updateCard(updateCard);
+    props.setDialogOpen(false);
   };
 
   const onDelete = () => {
     Service.deleteCard(updateCard.id);
+    props.setDialogOpen(false);
   };
 
   return (
@@ -172,9 +175,8 @@ const PopoverItems = (props: Props) => {
               className="w-full space-y-2"
             >
               <div className="flex items-center justify-between space-x-4 ">
-                <div className="flex items-center gap-2">
-                  <RxAvatar className="text-2xl" />
-                  <h4 className="text-sm font-semibold">User</h4>
+                <div className="rounded-md font-mono text-sm">
+                  {returnAvatar(returnValue("avatar"))}
                 </div>
                 <CollapsibleTrigger asChild>
                   <Button
@@ -189,9 +191,6 @@ const PopoverItems = (props: Props) => {
                     <span className="sr-only">Toggle</span>
                   </Button>
                 </CollapsibleTrigger>
-              </div>
-              <div className="rounded-md font-mono text-sm">
-                {returnAvatar(returnValue("avatar"))}
               </div>
               {users
                 .filter((avatar: string) => {
@@ -222,7 +221,7 @@ const PopoverItems = (props: Props) => {
           <span>Save</span>
         </Button>
         <Button
-          className="bg-red-500 mt-2 hover:bg-red-700"
+          className="bg-red-500 hover:bg-red-700"
           onClick={() => {
             onDelete();
           }}

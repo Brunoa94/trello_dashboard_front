@@ -1,25 +1,21 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { TaskCard } from "@/models/task-card";
 import PriorityLabel from "./priority-label";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { formatDate } from "./funtions/format-date";
-import { Avatar } from "./global-components";
 import PopoverItems from "./popover-items";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
+import { returnAvatar } from "@/components/global/avatar-icons";
 
 interface Props {
   card: TaskCard;
 }
 
 const DevelopmentCard = (props: Props) => {
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <div className="w-full px-4 py-2 bg-white rounded-md shadow-lg hover:shadow-xl hover:shadow-purple-900 shadow-purple-900 border-t-2 border-purple-900 cursor-pointer">
           <div className="flex flex-col gap-1">
@@ -52,10 +48,13 @@ const DevelopmentCard = (props: Props) => {
               </div>
               <PriorityLabel priority={props.card.priority} />
             </div>
+            <div className="flex items-center justify-end w-full gap-2">
+              {returnAvatar(props.card.avatar, true)}
+            </div>
           </div>
         </div>
       </DialogTrigger>
-      <PopoverItems taskCard={props.card} />
+      <PopoverItems taskCard={props.card} setDialogOpen={setIsDialogOpen} />
     </Dialog>
   );
 };

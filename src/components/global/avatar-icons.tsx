@@ -1,6 +1,7 @@
-import { AvatarImage, Avatar } from "@/components/ui/avatar";
+import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { TiUser } from "react-icons/ti";
 
-export const returnAvatar = (name: string) => {
+export const returnAvatar = (name: string, noSpan?: boolean) => {
   const returnIcon = () => {
     switch (name) {
       case "Bruno":
@@ -14,11 +15,14 @@ export const returnAvatar = (name: string) => {
     }
   };
   return (
-    <div className="w-full flex items-center">
+    <div className="w-full flex items-center justify-end">
       <Avatar>
         <AvatarImage src={returnIcon()} alt="@shadcn" />
+        <AvatarFallback className="AvatarFallback bg-gray-300" delayMs={600}>
+          <TiUser className="text-xl text-gray-500" />
+        </AvatarFallback>
       </Avatar>
-      <span className="ml-4">{name}</span>
+      {!noSpan && <span className="ml-4">{name}</span>}
     </div>
   );
 };
