@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Service from "./core/service";
 import { TaskCard } from "./models/task-card";
 import AddNewCard from "./components/card/add-new-card";
+import { DragDropContext } from "react-beautiful-dnd";
 
 function App() {
   const [cards, setCards] = useState<TaskCard[]>([]);
