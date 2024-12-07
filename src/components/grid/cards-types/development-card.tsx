@@ -6,6 +6,7 @@ import PopoverItems from "./popover-items";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { returnAvatar } from "@/components/global/avatar-icons";
+import { TiStopwatch } from "react-icons/ti";
 
 interface Props {
   card: TaskCard;
@@ -17,7 +18,7 @@ const DevelopmentCard = (props: Props) => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <div className="w-full px-4 py-2 bg-white rounded-md shadow-lg hover:shadow-xl hover:shadow-purple-900 shadow-purple-900 border-t-2 border-purple-900 cursor-pointer">
+        <div className="w-full px-4 py-2 bg-white rounded-md shadow-lg hover:shadow-xl hover:shadow-purple-900 shadow-purple-900 border-t-2 border-purple-900 cursor-pointer shrink-0">
           <div className="flex flex-col gap-1">
             <div
               style={{
@@ -41,8 +42,8 @@ const DevelopmentCard = (props: Props) => {
             </span>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <span className="text-sm font-roboto">Created at:</span>
-                <span className="text-sm font-bold font-roboto">
+                <TiStopwatch className="text-gray-400" />
+                <span className="text-xs font-bold font-roboto text-gray-500">
                   {formatDate(props.card.created_date)}
                 </span>
               </div>

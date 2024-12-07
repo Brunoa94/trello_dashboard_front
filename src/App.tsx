@@ -8,11 +8,15 @@ import Service from "./core/service";
 import { TaskCard } from "./models/task-card";
 import AddNewCard from "./components/card/add-new-card";
 import { DragDropContext } from "react-beautiful-dnd";
+import HeaderMobile from "./components/header/header-mobile";
+import CardsGridsMobile from "./components/grid/cards-grid-mobile";
 
 function App() {
   const [cards, setCards] = useState<TaskCard[]>([]);
   const [error, setError] = useState<string>("");
   const [addCard, setAddCard] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<number>(0);
+  const [currentStatus, setCurrentStatus] = useState<string>("TO_DO");
 
   async function fetchCards() {
     const service = new Service();
@@ -29,8 +33,8 @@ function App() {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-sky-600 flex items-center justify-center flex-col">
-      <div className="pb-4 flex items-center justify-start w-[calc(100%-32px)] md:w-[calc(100%-64px)] gap-x-3">
+    <div className="w-screen h-screen bg-sky-600 flex items-center md:justify-center flex-col px-4 md:px-0">
+      <div className="py-4 md:py-0 md:pb-4 flex items-center justify-start w-full md:w-[calc(100%-64px)] gap-x-3">
         <div className="flex items-center">
           <FaTrello className="text-3xl text-white" />
           <span className="text-3xl text-white">Trello</span>
@@ -45,10 +49,17 @@ function App() {
           </span>
         </div>
       </div>
-      <div className="w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-md bg-sky-700 md:w-[calc(100%-64px)] md:h-[calc(100%-124px)] md:rounded-xl p-2 md:p-4 flex flex-col gap-y-4">
-        <Header />
-        <CardsGrid cards={cards} />
+      <div className="hidden md:flex w-[calc(100%-32px)] h-[calc(100%-32px)] rounded-md bg-sky-700 md:w-[calc(100%-64px)] md:h-[calc(100%-124px)] md:rounded-xl p-2 md:p-4 flex-col gap-y-4">
+        <Header scrolledValue={scrolled} />
+        <CardsGrid cards={cards} setScrolled={setScrolled} />
         {addCard && <AddNewCard setAddCard={setAddCard} />}
+      </div>
+      <div className="h-[calc(100%-96px)] rounded-md bg-sky-500 w-full p-4 md:hidden gap-4 flex flex-col">
+        <HeaderMobile
+          currentStatus={currentStatus}
+          setCurrentStatus={setCurrentStatus}
+        />
+        <CardsGridsMobile cards={cards} currentStatus={currentStatus} />
       </div>
     </div>
   );

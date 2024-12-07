@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardsColumn from "./cards-column";
 import { TaskCard } from "@/models/task-card";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 interface Props {
   cards: TaskCard[];
+  setScrolled: (value: number) => void;
 }
 
 const CardsGrid = (props: Props) => {
@@ -15,6 +16,7 @@ const CardsGrid = (props: Props) => {
   const [allCards, setAllCards] = useState<TaskCard[]>([]);
   const [draggableArea, setDraggableArea] = useState<string>("");
   const [draggingCard, setDraggingCard] = useState<string>("");
+  const ref = useRef<HTMLDivElement>(null);
 
   function setCardInNewPosition() {
     const previousColumn = draggingCard.split(".")[2];
@@ -54,9 +56,7 @@ const CardsGrid = (props: Props) => {
   }
 
   useEffect(() => {
-    console.log("LOG: " + draggableArea + "  " + draggingCard);
     if (draggableArea !== "" && draggingCard !== "") {
-      console.log("EXECUTEI");
       setCardInNewPosition();
     }
   }, [draggableArea, draggingCard]);
@@ -134,11 +134,13 @@ const CardsGrid = (props: Props) => {
 
       functionsHash[destination.droppableId](columnCards);
     }
-
-    console.log("DETETIE DTRAG END");
   };
 
-  // const handleDragEnd = (event: any) => {
+  const onScroll = () => {
+    if (ref.current) {
+      props.setScrolled(ref.current.scrollLeft);
+    }
+  };
   //   const { active, over } = event;
 
   //   if (!over) return;
@@ -181,7 +183,11 @@ const CardsGrid = (props: Props) => {
   // };
 
   return (
-    <div className="w-full h-full bg-sky-800 rounded-xl px-2 md:px-4 md:grid md:grid-cols-4 md:gap-4 py-5">
+    <div
+      ref={ref}
+      onScroll={onScroll}
+      className="w-full h-[calc(100%-86px)] bg-sky-800 rounded-xl px-2 flex flex-col md:px-4 md:flex-row md:items-center md:gap-4 py-5 shrink-0 overflow-x-scroll"
+    >
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="TO_DO">
           {(provided) => (
@@ -189,8 +195,9 @@ const CardsGrid = (props: Props) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               id={"TO_DO"}
-              className="w-full  max-h-[calc(100vh-280px)] bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll"
+              className="w-full min-w-[282px] h-full bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll shrink-0 md:flex-[0.25]"
             >
+              <h1 className="flex mb-4 md:hidden">{"TO_DO"}</h1>
               <CardsColumn
                 cards={toDoCards}
                 setDraggableArea={setDraggableArea}
@@ -206,7 +213,7 @@ const CardsGrid = (props: Props) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               id={"IN_PROGRESS"}
-              className="w-full bg-sky-500 max-h-[calc(100vh-280px)] rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll"
+              className="flex-[0.25] w-full min-w-[282px] bg-sky-500 h-full rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll shrink-0"
             >
               <CardsColumn
                 cards={inProgressCards}
@@ -223,7 +230,7 @@ const CardsGrid = (props: Props) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               id={"IN_TESTING"}
-              className="w-full  max-h-[calc(100vh-280px)] bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll"
+              className="flex-[0.25] w-full min-w-[282px]  h-full bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll shrink-0"
             >
               <CardsColumn
                 cards={inTestingCards}
@@ -240,7 +247,7 @@ const CardsGrid = (props: Props) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               id={"DONE"}
-              className="w-full  max-h-[calc(100vh-280px)] bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll"
+              className="flex-[0.25] w-full min-w-[282px]  h-full bg-sky-500 rounded-xl p-4 flex flex-col items-center gap-4 overflow-y-scroll shrink-0"
             >
               <CardsColumn
                 cards={doneCards}

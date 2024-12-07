@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import HeaderColumn from "./header-column";
 
-function Header() {
+const Header = (props: { scrolledValue: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollLeft = props.scrolledValue;
+    }
+  }, [props.scrolledValue]);
+
   return (
     <div className="w-full h-3 md:h-16 bg-sky-800 rounded-md lg:rounded-xl flex items-center px-2 md:px-4 shrink-0">
-      <div className="w-full h-full md:grid md:grid-cols-4 md:gap-4 md:py-3">
+      <div
+        ref={ref}
+        className="w-full h-full md:flex md:items-center md:gap-4 md:py-3 overflow-x-scroll"
+      >
         <HeaderColumn name="To Do" />
         <HeaderColumn name="In Progress" />
         <HeaderColumn name="In Testing" />
@@ -12,6 +23,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

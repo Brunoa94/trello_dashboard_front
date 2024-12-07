@@ -13,7 +13,7 @@ interface Props {
 const GeneralTaskCard = (props: Props) => {
   return (
     <div
-      className="w-full"
+      className="w-full min-w-[250px] shrink-0"
       id={`card.${props.card.title_id}.${props.card.status}`}
     >
       <>

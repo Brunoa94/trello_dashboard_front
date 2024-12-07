@@ -2,10 +2,15 @@ export function formatDate(dateString: string) {
     // Parse the date string into a JavaScript Date object
     const date = new Date(dateString);
 
-    // Extract the day and month, ensuring two-digit formatting
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    // Extract the month number (1-indexed)
+    const monthNumber = date.getUTCMonth() + 1;
 
-    // Combine them in "DD-MM" format
-    return `${day}-${month}`;
+    // Map of abbreviated month names
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    // Get the abbreviated month name
+    const monthName = monthNames[date.getUTCMonth()];
+
+    // Return the month number and name
+    return `${monthNumber} ${monthName}.`.toLowerCase();
 }

@@ -11,7 +11,7 @@ interface Props {
 
 const CardsColumn = (props: Props) => {
   return (
-    <div className="flex flex-col w-full h-full gap-2">
+    <div className="flex flex-col w-full gap-2 shrink-0">
       {props.cards.map((card: TaskCard, index: number) => (
         <Draggable draggableId={`${card.id}`} index={index} key={`${card.id}`}>
           {(provided, snapshot) => (

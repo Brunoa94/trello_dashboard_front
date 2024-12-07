@@ -11,3 +11,10 @@ export const storyTypeColors: any = {
     QA: "#FFD700",
     SPIKE: "#808080",
 };
+
+export const status: any = {
+    TO_DO: "To Do",
+    IN_PROGRESS: "In Progress",
+    IN_TESTING: "In Testing",
+    DONE: "Done"
+}
