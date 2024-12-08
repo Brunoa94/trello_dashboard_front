@@ -25,3 +25,16 @@ export interface UpdateTaskCard{
     avatar?: string; 
     [key: string]: any;
 }
+
+export const emptyTaskCard: TaskCard = {
+    id: "",
+    title: "",
+    story_type: "",
+    priority: "",
+    name: "",
+    title_id: "",
+    status: "",
+    description: "",
+    avatar: "",
+    created_date: ""
+}

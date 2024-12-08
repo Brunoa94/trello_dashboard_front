@@ -1,13 +1,19 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import Service from "../core/service";
-import { TaskCard } from "@/models/task-card";
+import { emptyTaskCard, TaskCard, UpdateTaskCard } from "@/models/task-card";
 
 export interface GlobalContextType {
   cards: TaskCard[];
+  updateCards: (card: UpdateTaskCard) => void;
+  createCard: (card: TaskCard) => void;
+  deleteCard: (id: string) => void;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
   cards: [],
+  updateCards: () => {},
+  createCard: () => {},
+  deleteCard: () => {},
 });
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
@@ -23,12 +29,49 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  async function updateCards(card: UpdateTaskCard) {
+    let cardToUpdate: TaskCard = emptyTaskCard;
+
+    const cardsFiltered = cards.filter((arrayCard: TaskCard) => {
+      if (card.id === arrayCard.id) {
+        cardToUpdate = arrayCard;
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    cardToUpdate = {
+      ...cardToUpdate,
+      ...card,
+    };
+
+    if (cardToUpdate.id !== "") {
+      setCards([cardToUpdate, ...cardsFiltered]);
+    }
+  }
+
+  async function createCard(card: TaskCard) {
+    setCards([card, ...cards]);
+  }
+
+  async function deleteCard(id: string) {
+    setCards([
+      ...cards.filter((card: TaskCard) => {
+        return card.id !== id;
+      }),
+    ]);
+  }
+
   useEffect(() => {
     fetchCards();
   }, []);
 
   const value: GlobalContextType = {
     cards,
+    updateCards,
+    createCard,
+    deleteCard,
   };
 
   return (

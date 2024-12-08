@@ -1,6 +1,7 @@
 import { status } from "@/data/global";
 import React from "react";
 import { GrPrevious, GrNext } from "react-icons/gr";
+import ResumeButton from "../grid/resume-button";
 
 interface Props {
   currentStatus: string;
@@ -24,24 +25,30 @@ const HeaderMobile = (props: Props) => {
 
   return (
     <div className="flex items-center w-full gap-4">
-      {allStatus.findIndex((status) => status === props.currentStatus) > 0 && (
-        <GrPrevious
-          onClick={() => returnStatus(props.currentStatus, false)}
-          className="text-xl text-white pointer"
-        />
-      )}
+      <div className="w-6">
+        {allStatus.findIndex((status) => status === props.currentStatus) >
+          0 && (
+          <GrPrevious
+            onClick={() => returnStatus(props.currentStatus, false)}
+            className="text-xl text-white pointer"
+          />
+        )}
+      </div>
       <div className="w-24 flex items-center justify-center">
-        <span className="text-xl font-roboto text-white whitespace-nowrap uppercase">
+        <span className="text-xl font-roboto text-white whitespace-nowrap">
           {status[props.currentStatus]}
         </span>
       </div>
-      {allStatus.findIndex((status) => status === props.currentStatus) <
-        allStatus.length - 1 && (
-        <GrNext
-          onClick={() => returnStatus(props.currentStatus, true)}
-          className="text-xl text-white pointer"
-        />
-      )}
+      <div className="w-6">
+        {allStatus.findIndex((status) => status === props.currentStatus) <
+          allStatus.length - 1 && (
+          <GrNext
+            onClick={() => returnStatus(props.currentStatus, true)}
+            className="text-xl text-white pointer"
+          />
+        )}
+      </div>
+      <ResumeButton status={props.currentStatus} />
     </div>
   );
 };

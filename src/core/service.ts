@@ -77,7 +77,16 @@ export default class Service{
         const query = `
             mutation CreateCard($card: NewCard!) {
                 createCard(card: $card) {
-                    title
+                    title,
+                    id,
+                    title_id,
+                    story_type,
+                    priority,
+                    created_date,
+                    status,
+                    name,
+                    avatar,
+                    description
                 }
             }
         `;
@@ -96,7 +105,6 @@ export default class Service{
         })
             .then(response => response.json())
             .then(data => {
-                console.log("DATA: " + JSON.stringify(data))
                 return data.data
         })
             .catch(error => {
@@ -152,7 +160,8 @@ export default class Service{
                     created_date,
                     status,
                     name,
-                    avatar
+                    avatar,
+                    description
                 }
             }
         `;

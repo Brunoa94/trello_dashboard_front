@@ -24,6 +24,8 @@ import { returnStoryTypeIcons } from "@/components/global/story-type-icons";
 import { returnAvatar } from "@/components/global/avatar-icons";
 import { MdOutlinePriorityHigh, MdTimeline } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
+import { BsCardText } from "react-icons/bs";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   taskCard: TaskCard;
@@ -108,6 +110,20 @@ const PopoverItems = (props: Props) => {
               id="width"
               defaultValue={props.taskCard.status}
               className="ml-auto w-fit h-8"
+            />
+          </div>
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <BsCardText className="text-xl" />
+              <h4 className="text-sm font-semibold">Description</h4>
+            </div>
+            <Textarea
+              id="textarea"
+              defaultValue={returnValue("description")}
+              className="w-full h-8"
+              onChange={(e: any) => {
+                updateInput(e.target.value, "description");
+              }}
             />
           </div>
           <div className="w-full items-center gap-4">

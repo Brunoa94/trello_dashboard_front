@@ -9,6 +9,7 @@ export default {
     	extend: {
             fontFamily: {
                 roboto: ['Roboto', 'sans-serif'], // Add Roboto
+				montserrat: ['Montserrat', 'serif']
             },
     		borderRadius: {
     			lg: 'var(--radius)',

@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { GlobalContext } from "@/context/global-context";
 import { status } from "@/data/global";
 import { motion } from "framer-motion";
+import { SiOpenai } from "react-icons/si";
 
 interface Props {
   status: string;
@@ -51,15 +52,22 @@ const ResumeButton = (props: Props) => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger
         onClick={() => getColumnResume()}
-        className=" hover:bg-slate-100 p-2 rounded-md flex items-center gap-2"
+        className=" md:hover:bg-slate-100 p-2 rounded-md flex items-center gap-2 ml-auto"
       >
-        <AiOutlineOpenAI className="text-sky-600" />
-        <span className="text-xs text-sky-600 font-roboto">ChatGPT Resume</span>
+        <AiOutlineOpenAI className="text-white md:text-sky-600" />
+        <span className="text-xs text-white md:text-sky-600 font-roboto">
+          ChatGPT Resume
+        </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {status[props.status]} Column Resume
+            <div className="w-full flex items-center gap-4 py-2 border-b-4 border-sky-700">
+              <SiOpenai className="text-2xl text-sky-600" />
+              <span className="font-montserrat text-sky-700">
+                {status[props.status]} Column Resume
+              </span>
+            </div>
           </AlertDialogTitle>
           <AlertDialogDescription>
             {resumeMessage.split("").map((char, index) => (
@@ -80,7 +88,12 @@ const ResumeButton = (props: Props) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button onClick={() => setIsOpen(false)}>Close</Button>
+          <Button
+            className="bg-sky-700 hover:bg-sky-800"
+            onClick={() => setIsOpen(false)}
+          >
+            Close
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

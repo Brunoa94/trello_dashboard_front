@@ -3,14 +3,11 @@ import { FaTrello } from "react-icons/fa6";
 import Header from "./components/header/header";
 import CardsGrid from "./components/grid/cards-grid";
 import { IoMdAdd } from "react-icons/io";
-import { useContext, useEffect, useState } from "react";
-import Service from "./core/service";
-import { TaskCard } from "./models/task-card";
+import { useState } from "react";
 import AddNewCard from "./components/card/add-new-card";
-import { DragDropContext } from "react-beautiful-dnd";
 import HeaderMobile from "./components/header/header-mobile";
 import CardsGridsMobile from "./components/grid/cards-grid-mobile";
-import { GlobalContext, GlobalProvider } from "./context/global-context";
+import { GlobalProvider } from "./context/global-context";
 
 function App() {
   const [addCard, setAddCard] = useState<boolean>(false);
@@ -46,6 +43,7 @@ function App() {
             setCurrentStatus={setCurrentStatus}
           />
           <CardsGridsMobile currentStatus={currentStatus} />
+          {addCard && <AddNewCard setAddCard={setAddCard} />}
         </div>
       </GlobalProvider>
     </div>

@@ -6,9 +6,11 @@ import { formatDate } from "./funtions/format-date";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PopoverItems from "./popover-items";
 import { returnAvatar } from "@/components/global/avatar-icons";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 interface Props {
   card: TaskCard;
+  onDelete: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const BugfixCard = (props: Props) => {
@@ -49,6 +51,14 @@ const BugfixCard = (props: Props) => {
               <PriorityLabel priority={props.card.priority} />
             </div>
             <div className="flex items-center justify-end w-full gap-2">
+              <div
+                onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                  props.onDelete(e)
+                }
+                className="p-2 rounded-full flex items-center justify-center hover:bg-gray-200 cursor-pointer"
+              >
+                <RiDeleteBin5Line className="text-xl text-red-600" />
+              </div>
               {returnAvatar(props.card.avatar, true)}
             </div>
           </div>
