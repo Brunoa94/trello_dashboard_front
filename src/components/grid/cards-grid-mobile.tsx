@@ -1,16 +1,18 @@
 import { TaskCard } from "@/models/task-card";
-import React from "react";
+import React, { useContext } from "react";
 import GeneralTaskCard from "./general-task-card";
+import { GlobalContext } from "@/context/global-context";
 
 interface Props {
-  cards: TaskCard[];
   currentStatus: string;
 }
 
 const CardsGridsMobile = (props: Props) => {
+  const { cards } = useContext(GlobalContext);
+
   return (
     <div className="h-full w-full flex flex-col gap-4 overflow-y-scroll rounded-md">
-      {props.cards
+      {cards
         .filter((card: TaskCard) => {
           return card.status === props.currentStatus;
         })

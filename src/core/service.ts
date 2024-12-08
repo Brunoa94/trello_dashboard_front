@@ -3,16 +3,43 @@ import { TaskCard, UpdateTaskCard } from "@/models/task-card";
 
 export default class Service{
     private headers: any = {
+        'Access-Control-Allow-Origin': "*",
         'Content-Type': 'application/json',
         'Authorization': 'Bearer your-access-token' // Include this if authentication is needed
     }
 
     constructor(){}
 
+    static async getChapGPTResume(message: string){
+        const headers: any = {
+            'Content-Type': 'application/json',
+        };
+
+        const requestBody = JSON.stringify({
+            message
+        })
+
+        const response = await fetch("http://localhost:4000/chatgpt-resume", {
+            method: 'POST',
+            headers: headers,
+            body: requestBody
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("DATA: " + JSON.stringify(data))
+                return data;
+        })
+            .catch(error => {
+                console.error('Error:', error);
+                return {error}
+        });
+
+        return response;
+    }
+
     static async deleteCard(id: string){
         const headers: any = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer your-access-token' // Include this if authentication is needed
         };
 
         const query = `

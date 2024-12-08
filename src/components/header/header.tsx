@@ -16,10 +16,10 @@ const Header = (props: { scrolledValue: number }) => {
         ref={ref}
         className="w-full h-full md:flex md:items-center md:gap-4 md:py-3 overflow-x-scroll"
       >
-        <HeaderColumn name="To Do" />
-        <HeaderColumn name="In Progress" />
-        <HeaderColumn name="In Testing" />
-        <HeaderColumn name="Done" />
+        <HeaderColumn name="TO_DO" />
+        <HeaderColumn name="IN_PROGRESS" />
+        <HeaderColumn name="IN_TESTING" />
+        <HeaderColumn name="DONE" />
       </div>
     </div>
   );

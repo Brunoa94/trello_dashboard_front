@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CardsColumn from "./cards-column";
 import { TaskCard } from "@/models/task-card";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { GlobalContext } from "@/context/global-context";
 
 interface Props {
-  cards: TaskCard[];
   setScrolled: (value: number) => void;
 }
 
@@ -17,6 +17,7 @@ const CardsGrid = (props: Props) => {
   const [draggableArea, setDraggableArea] = useState<string>("");
   const [draggingCard, setDraggingCard] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
+  const { cards } = useContext(GlobalContext);
 
   function setCardInNewPosition() {
     const previousColumn = draggingCard.split(".")[2];
@@ -62,30 +63,26 @@ const CardsGrid = (props: Props) => {
   }, [draggableArea, draggingCard]);
 
   useEffect(() => {
-    if (props.cards) {
+    if (cards) {
       setToDoCards([
-        ...props.cards.filter(
-          (tempCard: TaskCard) => tempCard.status === "TO_DO"
-        ),
+        ...cards.filter((tempCard: TaskCard) => tempCard.status === "TO_DO"),
       ]);
       setInProgressCards([
-        ...props.cards.filter(
+        ...cards.filter(
           (tempCard: TaskCard) => tempCard.status === "IN_PROGRESS"
         ),
       ]);
       setInTestingCards([
-        ...props.cards.filter(
+        ...cards.filter(
           (tempCard: TaskCard) => tempCard.status === "IN_TESTING"
         ),
       ]);
       setDoneCards([
-        ...props.cards.filter(
-          (tempCard: TaskCard) => tempCard.status === "DONE"
-        ),
+        ...cards.filter((tempCard: TaskCard) => tempCard.status === "DONE"),
       ]);
-      setAllCards(props.cards);
+      setAllCards(cards);
     }
-  }, [props.cards]);
+  }, [cards]);
 
   const handleDragEnd = (result: any) => {
     const { source, destination } = result;
