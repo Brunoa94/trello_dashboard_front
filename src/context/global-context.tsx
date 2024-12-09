@@ -7,6 +7,7 @@ export interface GlobalContextType {
   updateCards: (card: UpdateTaskCard) => void;
   createCard: (card: TaskCard) => void;
   deleteCard: (id: string) => void;
+  fetching: boolean;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -14,16 +15,19 @@ export const GlobalContext = createContext<GlobalContextType>({
   updateCards: () => {},
   createCard: () => {},
   deleteCard: () => {},
+  fetching: true,
 });
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [cards, setCards] = useState<TaskCard[]>([]);
+  const [fetching, setFetching] = useState<boolean>(true);
 
   async function fetchCards() {
     const service = new Service();
     try {
       const response: TaskCard[] = await service.fetchCards();
       setCards(response);
+      setFetching(false);
     } catch (e: any) {
       console.error("Failed to fetch cards:", e);
     }
@@ -72,6 +76,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     updateCards,
     createCard,
     deleteCard,
+    fetching,
   };
 
   return (

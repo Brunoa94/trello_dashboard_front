@@ -200,6 +200,7 @@ const CardsGrid = (props: Props) => {
                 cards={toDoCards}
                 setDraggableArea={setDraggableArea}
                 setDraggingCard={setDraggingCard}
+                id="TO_DO"
               />
               {provided.placeholder}
             </div>
@@ -217,6 +218,7 @@ const CardsGrid = (props: Props) => {
                 cards={inProgressCards}
                 setDraggableArea={setDraggableArea}
                 setDraggingCard={setDraggingCard}
+                id="IN_PROGRESS"
               />
               {provided.placeholder}
             </div>
@@ -234,6 +236,7 @@ const CardsGrid = (props: Props) => {
                 cards={inTestingCards}
                 setDraggableArea={setDraggableArea}
                 setDraggingCard={setDraggingCard}
+                id="IN_TESTING"
               />
               {provided.placeholder}
             </div>
@@ -251,6 +254,7 @@ const CardsGrid = (props: Props) => {
                 cards={doneCards}
                 setDraggableArea={setDraggableArea}
                 setDraggingCard={setDraggingCard}
+                id="DONE"
               />
               {provided.placeholder}
             </div>
