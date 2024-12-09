@@ -19,18 +19,16 @@ export default class Service{
             message
         })
 
-        const response = await fetch("http://localhost:4000/chatgpt-resume", {
+        const response = await fetch("https://trello-dashboard-server.onrender.com/chatgpt-resume", {
             method: 'POST',
             headers: headers,
             body: requestBody
         })
             .then(response => response.json())
             .then(data => {
-                console.log("DATA: " + JSON.stringify(data))
                 return data;
         })
             .catch(error => {
-                console.error('Error:', error);
                 return {error}
         });
 
@@ -55,7 +53,7 @@ export default class Service{
             }
         });
 
-        const response = await fetch("http://localhost:4000/graphql", {
+        const response = await fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: headers,
             body: requestBody
@@ -98,7 +96,7 @@ export default class Service{
             }
         });
 
-        const response = await fetch("http://localhost:4000/graphql", {
+        const response = await fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: this.headers,
             body: requestBody
@@ -131,14 +129,15 @@ export default class Service{
             card
         }
 
-        const response = fetch("http://localhost:4000/graphql", {
+        const response = fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({query, variables})
         })
             .then(response => response.json())
             .then(data => {
-                console.log
+                console.log("Data: " + data);
+                return data;
         })
             .catch(error => {
                 console.error('Error:', error);
@@ -170,7 +169,7 @@ export default class Service{
             query: query,
         });
 
-        const response = fetch("http://localhost:4000/graphql", {
+        const response = fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: this.headers,
             body: requestBody

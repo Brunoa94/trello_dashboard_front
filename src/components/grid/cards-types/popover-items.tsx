@@ -36,6 +36,7 @@ const PopoverItems = (props: Props) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [updateCard, setUpdateCard] = useState<UpdateTaskCard>({ id: "" });
   const [collapsed, setCollapsed] = useState<string>("closed");
+  const [textDisabled, setTextDisabled] = useState<boolean>(true);
 
   useEffect(() => {
     if (props.taskCard) {
@@ -118,12 +119,15 @@ const PopoverItems = (props: Props) => {
               <h4 className="text-sm font-semibold">Description</h4>
             </div>
             <Textarea
+              disabled={textDisabled}
               id="textarea"
               defaultValue={returnValue("description")}
               className="w-full h-8"
               onChange={(e: any) => {
                 updateInput(e.target.value, "description");
               }}
+              onMouseEnter={() => setTextDisabled(false)}
+              onMouseLeave={() => setTextDisabled(true)}
             />
           </div>
           <div className="w-full items-center gap-4">
