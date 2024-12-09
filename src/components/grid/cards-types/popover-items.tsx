@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TaskCard, UpdateTaskCard } from "@/models/task-card";
@@ -10,20 +10,11 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
 import { priorities, storyTypeColors, users } from "@/data/global";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Service from "@/core/service";
 import { returnStoryTypeIcons } from "@/components/global/story-type-icons";
 import { returnAvatar } from "@/components/global/avatar-icons";
 import { MdOutlinePriorityHigh, MdTimeline } from "react-icons/md";
-import { RxAvatar } from "react-icons/rx";
 import { BsCardText } from "react-icons/bs";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -33,7 +24,6 @@ interface Props {
 }
 
 const PopoverItems = (props: Props) => {
-  const [editMode, setEditMode] = useState<boolean>(false);
   const [updateCard, setUpdateCard] = useState<UpdateTaskCard>({ id: "" });
   const [collapsed, setCollapsed] = useState<string>("closed");
   const [textDisabled, setTextDisabled] = useState<boolean>(true);

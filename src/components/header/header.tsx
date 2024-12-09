@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import HeaderColumn from "./header-column";
 
 const Header = (props: { scrolledValue: number }) => {

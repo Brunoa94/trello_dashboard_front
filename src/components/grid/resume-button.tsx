@@ -1,5 +1,5 @@
 import { TaskCard } from "@/models/task-card";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -45,8 +45,6 @@ const ResumeButton = (props: Props) => {
 
     setResumeMessage(response.response);
   }
-
-  const pIndex = 1;
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>

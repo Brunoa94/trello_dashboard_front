@@ -1,4 +1,3 @@
-import React from "react";
 import ResumeButton from "../grid/resume-button";
 import { status } from "@/data/global";
 

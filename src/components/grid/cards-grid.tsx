@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CardsColumn from "./cards-column";
 import { TaskCard } from "@/models/task-card";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -81,6 +81,7 @@ const CardsGrid = (props: Props) => {
         ...cards.filter((tempCard: TaskCard) => tempCard.status === "DONE"),
       ]);
       setAllCards(cards);
+      console.log("All Cards : " + allCards.length);
     }
   }, [cards]);
 

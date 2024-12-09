@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
 import { TaskCard } from "@/models/task-card";
 import GeneralTaskCard from "./general-task-card";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 
 interface Props {
   cards: TaskCard[];
@@ -14,7 +13,7 @@ const CardsColumn = (props: Props) => {
     <div className="flex flex-col w-full gap-2 shrink-0">
       {props.cards.map((card: TaskCard, index: number) => (
         <Draggable draggableId={`${card.id}`} index={index} key={`${card.id}`}>
-          {(provided, snapshot) => (
+          {(provided, _) => (
             <div
               ref={provided.innerRef} // Attach the draggable's ref
               {...provided.draggableProps} // Spread draggable props

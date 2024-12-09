@@ -1,5 +1,5 @@
 import { TaskCard } from "@/models/task-card";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import GeneralTaskCard from "./general-task-card";
 import { GlobalContext } from "@/context/global-context";
 

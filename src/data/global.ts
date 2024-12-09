@@ -1,5 +1,3 @@
-import { AiOutlineThunderbolt } from "react-icons/ai";
-
 export const priorities = ["HIGH", "MEDIUM", "LOW", "CRITICIAL"];
 
 export const users = ["Tom", "John", "Anna", "Bruno"];

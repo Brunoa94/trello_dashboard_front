@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,6 @@ interface Props {
 }
 
 const AddNewCard = (props: Props) => {
-  const priorities = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
   const storyTypes = ["BUGFIX", "DESIGN", "DEVELOPMENT", "QA", "SPIKE"];
   const avatars = ["Bruno", "John", "Anna", "Magui", "Will", "Tom"];
   const statuses = ["TO_DO", "IN_PROGRESS", "IN_TESTING", "DONE"];

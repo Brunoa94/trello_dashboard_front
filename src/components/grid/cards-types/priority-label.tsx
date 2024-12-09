@@ -1,4 +1,3 @@
-import React from "react";
 import { PiWarningCircle } from "react-icons/pi";
 
 interface Props {

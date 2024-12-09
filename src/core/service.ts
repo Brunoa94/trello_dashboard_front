@@ -1,11 +1,10 @@
 import { CreateCard } from "@/models/create-card";
-import { TaskCard, UpdateTaskCard } from "@/models/task-card";
+import { UpdateTaskCard } from "@/models/task-card";
 
 export default class Service{
     private headers: any = {
         'Access-Control-Allow-Origin': "*",
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer your-access-token' // Include this if authentication is needed
     }
 
     constructor(){}
@@ -53,14 +52,13 @@ export default class Service{
             }
         });
 
-        const response = await fetch("https://trello-dashboard-server.onrender.com/graphql", {
+        await fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: headers,
             body: requestBody
         })
             .then(response => response.json())
             .then(data => {
-                console.log("DATA: " + JSON.stringify(data))
                 return data.data
         })
             .catch(error => {
@@ -116,7 +114,6 @@ export default class Service{
     static async updateCard(card: UpdateTaskCard){
         const headers: any = {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer your-access-token' // Include this if authentication is needed
         };
 
         const query = `
@@ -129,7 +126,7 @@ export default class Service{
             card
         }
 
-        const response = fetch("https://trello-dashboard-server.onrender.com/graphql", {
+        await fetch("https://trello-dashboard-server.onrender.com/graphql", {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({query, variables})
@@ -144,7 +141,7 @@ export default class Service{
                 return {error}
         });
 
-        return "response"
+        return "Updated Successfully"
     }
     
     public async fetchCards(){

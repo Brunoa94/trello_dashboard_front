@@ -1,5 +1,4 @@
 import { status } from "@/data/global";
-import React from "react";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import ResumeButton from "../grid/resume-button";
 
