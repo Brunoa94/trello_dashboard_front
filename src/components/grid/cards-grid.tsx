@@ -6,6 +6,7 @@ import { GlobalContext } from "@/context/global-context";
 
 interface Props {
   setScrolled: (value: number) => void;
+  setShowBanner: (value: boolean) => void;
 }
 
 const CardsGrid = (props: Props) => {
@@ -13,11 +14,37 @@ const CardsGrid = (props: Props) => {
   const [inProgressCards, setInProgressCards] = useState<TaskCard[]>([]);
   const [inTestingCards, setInTestingCards] = useState<TaskCard[]>([]);
   const [doneCards, setDoneCards] = useState<TaskCard[]>([]);
-  const [allCards, setAllCards] = useState<TaskCard[]>([]);
   const [draggableArea, setDraggableArea] = useState<string>("");
   const [draggingCard, setDraggingCard] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
   const { cards } = useContext(GlobalContext);
+
+  function verifyLoadedCards() {
+    console.log("CARDS; " + cards.length);
+    if (cards.length === 0) {
+      props.setShowBanner(true);
+    } else {
+      return;
+    }
+
+    setTimeout(() => {
+      props.setShowBanner(false);
+    }, 5000);
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (cards.length === 0) {
+        props.setShowBanner(true);
+
+        setTimeout(() => {
+          props.setShowBanner(false);
+        }, 5000);
+      }
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [cards]);
 
   function setCardInNewPosition() {
     const previousColumn = draggingCard.split(".")[2];
@@ -80,8 +107,6 @@ const CardsGrid = (props: Props) => {
       setDoneCards([
         ...cards.filter((tempCard: TaskCard) => tempCard.status === "DONE"),
       ]);
-      setAllCards(cards);
-      console.log("All Cards : " + allCards.length);
     }
   }, [cards]);
 
