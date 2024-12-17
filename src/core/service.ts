@@ -133,7 +133,6 @@ export default class Service{
         })
             .then(response => response.json())
             .then(data => {
-                console.log("Data: " + data);
                 return data;
         })
             .catch(error => {

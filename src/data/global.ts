@@ -2,6 +2,8 @@ export const priorities = ["HIGH", "MEDIUM", "LOW", "CRITICIAL"];
 
 export const users = ["Tom", "John", "Anna", "Bruno"];
 
+export const statusIds = ["TO_DO", "IN_PROGRESS", "IN_TESTING", "DONE"]
+
 export const storyTypeColors: any = {
     BUGFIX: "#CC5500",
     DESIGN: "#006400",

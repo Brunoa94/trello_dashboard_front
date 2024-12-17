@@ -1,4 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import CardsColumn from "./cards-column";
 import { TaskCard } from "@/models/task-card";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -7,6 +14,13 @@ import { GlobalContext } from "@/context/global-context";
 interface Props {
   setScrolled: (value: number) => void;
   setShowBanner: (value: boolean) => void;
+}
+
+interface AnyVoidProps {
+  [key: string]: Dispatch<SetStateAction<TaskCard[]>>;
+}
+interface HashArrayProps {
+  [key: string]: TaskCard[];
 }
 
 const CardsGrid = (props: Props) => {
@@ -18,19 +32,6 @@ const CardsGrid = (props: Props) => {
   const [draggingCard, setDraggingCard] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
   const { cards } = useContext(GlobalContext);
-
-  function verifyLoadedCards() {
-    console.log("CARDS; " + cards.length);
-    if (cards.length === 0) {
-      props.setShowBanner(true);
-    } else {
-      return;
-    }
-
-    setTimeout(() => {
-      props.setShowBanner(false);
-    }, 5000);
-  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,14 +52,14 @@ const CardsGrid = (props: Props) => {
     const cardId = draggingCard.split(".")[1];
 
     if (previousColumn !== draggableArea) {
-      const hashArray: any = {
+      const hashArray: HashArrayProps = {
         TO_DO: toDoCards,
         IN_PROGRESS: inProgressCards,
         IN_TESTING: inTestingCards,
         DONE: doneCards,
       };
 
-      const functionsHash: any = {
+      const functionsHash: AnyVoidProps = {
         TO_DO: setToDoCards,
         IN_PROGRESS: setInProgressCards,
         IN_TESTING: setInTestingCards,
@@ -68,6 +69,10 @@ const CardsGrid = (props: Props) => {
       const cardMoving = hashArray[previousColumn].find((card: TaskCard) => {
         return card.title_id === cardId;
       });
+
+      if (!cardMoving) {
+        return;
+      }
 
       const destinationArray = [...hashArray[draggableArea]];
       functionsHash[draggableArea]([cardMoving, ...destinationArray]);
@@ -110,17 +115,18 @@ const CardsGrid = (props: Props) => {
     }
   }, [cards]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (result: any) => {
     const { source, destination } = result;
 
-    const hashArray: any = {
+    const hashArray: HashArrayProps = {
       TO_DO: toDoCards,
       IN_PROGRESS: inProgressCards,
       IN_TESTING: inTestingCards,
       DONE: doneCards,
     };
 
-    const functionsHash: any = {
+    const functionsHash: AnyVoidProps = {
       TO_DO: setToDoCards,
       IN_PROGRESS: setInProgressCards,
       IN_TESTING: setInTestingCards,
@@ -151,7 +157,7 @@ const CardsGrid = (props: Props) => {
         )
       );
     } else {
-      let columnCards = hashArray[destination.droppableId];
+      const columnCards = hashArray[destination.droppableId];
       const element = columnCards.splice(source.index, 1)[0];
       columnCards.splice(destination.index, 0, element);
 
@@ -164,46 +170,6 @@ const CardsGrid = (props: Props) => {
       props.setScrolled(ref.current.scrollLeft);
     }
   };
-  //   const { active, over } = event;
-
-  //   if (!over) return;
-
-  //   if (over.id) {
-  //     const hashArray: any = {
-  //       TO_DO: toDoCards,
-  //       IN_PROGRESS: inProgressCards,
-  //       IN_TESTING: inTestingCards,
-  //       DONE: doneCards,
-  //     };
-
-  //     const functionsHash: any = {
-  //       TO_DO: setToDoCards,
-  //       IN_PROGRESS: setInProgressCards,
-  //       IN_TESTING: setInTestingCards,
-  //       DONE: setDoneCards,
-  //     };
-
-  //     if (
-  //       !hashArray[over.id].some((tempCard: TaskCard) => {
-  //         return tempCard.title === active.id;
-  //       })
-  //     ) {
-  //       const cardToInsert = allCards.filter((tempCard: TaskCard) => {
-  //         return tempCard.title_id === active.id;
-  //       });
-
-  //       functionsHash[over.id]([cardToInsert, ...hashArray[over.id]]);
-  //     }
-  //   }
-
-  //   const originId = active.id;
-
-  //   const destinationId = over.id;
-
-  //   console.log(
-  //     `Dragged item ${originId} from origin to destination ${destinationId}`
-  //   );
-  // };
 
   return (
     <div

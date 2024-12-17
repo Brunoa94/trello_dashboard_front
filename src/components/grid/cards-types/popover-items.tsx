@@ -3,13 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TaskCard, UpdateTaskCard } from "@/models/task-card";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
-import { priorities, storyTypeColors, users } from "@/data/global";
+import { priorities, statusIds, storyTypeColors, users } from "@/data/global";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Service from "@/core/service";
 import { returnStoryTypeIcons } from "@/components/global/story-type-icons";
@@ -17,6 +11,7 @@ import { returnAvatar } from "@/components/global/avatar-icons";
 import { MdOutlinePriorityHigh, MdTimeline } from "react-icons/md";
 import { BsCardText } from "react-icons/bs";
 import { Textarea } from "@/components/ui/textarea";
+import CollapsibleInput from "../collapsible-input";
 
 interface Props {
   taskCard: TaskCard;
@@ -91,19 +86,36 @@ const PopoverItems = (props: Props) => {
           </div>
         </DialogTitle>
         <div className="flex flex-col gap-2">
-          <div className="flex items-center">
+          <div className="hidden flex-col items-start md:flex md:items-center md:flex-row">
             <div className="flex items-center gap-2">
               <MdTimeline className="text-xl" />
-              <Label htmlFor="width">Status: </Label>
+              <Label htmlFor="width">Status</Label>
             </div>
             <Input
               disabled
               id="width"
               defaultValue={props.taskCard.status}
-              className="ml-auto w-fit h-8"
+              className="hidden ml-auto w-fit h-8 md:flex"
             />
           </div>
-          <div className="w-full flex flex-col gap-4">
+          <div className="md:hidden w-full">
+            <CollapsibleInput
+              inputHeader={
+                <div className="flex items-center gap-2">
+                  <MdTimeline className="text-xl" />
+                  <Label htmlFor="width">Status</Label>
+                </div>
+              }
+              idForm="status"
+              valuesAvailable={statusIds}
+              taskCard={props.taskCard}
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              updateCard={updateCard}
+              updateInput={updateInput}
+            />
+          </div>
+          <div className="mt-4 md:mt-0 w-full flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <BsCardText className="text-xl" />
               <h4 className="text-sm font-semibold">Description</h4>
@@ -121,52 +133,21 @@ const PopoverItems = (props: Props) => {
             />
           </div>
           <div className="w-full items-center gap-4">
-            <Collapsible
-              open={collapsed === "priority"}
-              className="w-full space-y-2"
-            >
-              <div className="flex items-center justify-between space-x-4 max-w-full">
+            <CollapsibleInput
+              inputHeader={
                 <div className="flex items-center gap-2">
                   <MdOutlinePriorityHigh className="text-xl" />
                   <h4 className="text-sm font-semibold">Priority</h4>
                 </div>
-                <CollapsibleTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      collapsed === "priority"
-                        ? setCollapsed("closed")
-                        : setCollapsed("priority");
-                    }}
-                  >
-                    <ChevronsUpDown className="h-4 w-4" />
-                    <span className="sr-only">Toggle</span>
-                  </Button>
-                </CollapsibleTrigger>
-              </div>
-              <div className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm flex items-center gap-2">
-                <span className="text-md">{returnValue("priority")}</span>
-              </div>
-              {priorities
-                .filter((priority: string) => {
-                  return priority !== returnValue("priority");
-                })
-                .map((priority: string) => (
-                  <>
-                    <CollapsibleContent className="space-y-2">
-                      <div
-                        onClick={() => {
-                          setCollapsed("closed");
-                          updateInput(priority, "priority");
-                        }}
-                        className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm cursor-pointer"
-                      >
-                        {priority}
-                      </div>
-                    </CollapsibleContent>
-                  </>
-                ))}
-            </Collapsible>
+              }
+              idForm="priority"
+              valuesAvailable={priorities}
+              taskCard={props.taskCard}
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              updateCard={updateCard}
+              updateInput={updateInput}
+            />
           </div>
           <div className="w-full flex items-center gap-4">
             <Label htmlFor="maxHeight" className="text-black whitespace-nowrap">
@@ -180,46 +161,20 @@ const PopoverItems = (props: Props) => {
             />
           </div>
           <div className="w-full items-center gap-4">
-            <Collapsible
-              open={collapsed === "avatar"}
-              className="w-full space-y-2"
-            >
-              <div className="flex items-center justify-between space-x-4 ">
+            <CollapsibleInput
+              inputHeader={
                 <div className="rounded-md font-mono text-sm">
                   {returnAvatar(returnValue("avatar"))}
                 </div>
-                <CollapsibleTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      collapsed === "avatar"
-                        ? setCollapsed("closed")
-                        : setCollapsed("avatar");
-                    }}
-                  >
-                    <ChevronsUpDown className="h-4 w-4" />
-                    <span className="sr-only">Toggle</span>
-                  </Button>
-                </CollapsibleTrigger>
-              </div>
-              {users
-                .filter((avatar: string) => {
-                  return avatar !== returnValue("avatar");
-                })
-                .map((avatar: string) => (
-                  <CollapsibleContent className="space-y-2">
-                    <div
-                      onClick={() => {
-                        setCollapsed("closed");
-                        updateInput(avatar, "avatar");
-                      }}
-                      className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm cursor-pointer"
-                    >
-                      {avatar}
-                    </div>
-                  </CollapsibleContent>
-                ))}
-            </Collapsible>
+              }
+              idForm="avatar"
+              valuesAvailable={users}
+              taskCard={props.taskCard}
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              updateCard={updateCard}
+              updateInput={updateInput}
+            />
           </div>
         </div>
         <Button

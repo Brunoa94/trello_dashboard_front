@@ -29,10 +29,10 @@ const ResumeButton = (props: Props) => {
   function returnContent() {
     const allContent = cards
       .filter((card: TaskCard) => {
-        return card.status !== props.status;
+        return card.status === props.status;
       })
       .map((card: TaskCard) => {
-        return card.title_id;
+        return card.description;
       })
       .toString();
 
@@ -40,7 +40,7 @@ const ResumeButton = (props: Props) => {
   }
 
   async function getColumnResume() {
-    const contentMessage = `Give a resume of this text: ${returnContent()}`;
+    const contentMessage = `Give a resume of this columns: ${returnContent()}`;
     const response = await Service.getChapGPTResume(contentMessage);
 
     setResumeMessage(response.response);

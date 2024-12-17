@@ -3,11 +3,11 @@ import { FaTrello } from "react-icons/fa6";
 import Header from "./components/header/header";
 import CardsGrid from "./components/grid/cards-grid";
 import { IoMdAdd } from "react-icons/io";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import AddNewCard from "./components/card/add-new-card";
 import HeaderMobile from "./components/header/header-mobile";
 import CardsGridsMobile from "./components/grid/cards-grid-mobile";
-import { GlobalContext, GlobalProvider } from "./context/global-context";
+import { GlobalProvider } from "./context/global-context";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 
